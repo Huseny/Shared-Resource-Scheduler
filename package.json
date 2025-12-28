@@ -1,0 +1,30 @@
+{
+  "name": "shared-resource-scheduler",
+  "version": "1.0.0",
+  "description": "A robust backend system for managing shared resources (meeting rooms, vehicles, equipment) with time-based reservations, overlap prevention, approval workflows, and administrative controls.",
+  "main": "index.js",
+  "keywords": [
+    "resource-management",
+    "scheduling",
+    "booking-system",
+    "reservation",
+    "meeting-rooms",
+    "equipment-management",
+    "calendar",
+    "backend",
+    "api"
+  ],
+  "author": "Huseny",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Huseny/Shared-Resource-Scheduler.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Huseny/Shared-Resource-Scheduler/issues"
+  },
+  "homepage": "https://github.com/Huseny/Shared-Resource-Scheduler#readme",
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
