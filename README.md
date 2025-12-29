@@ -1,99 +1,207 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Shared Resource Scheduling System
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A robust NestJS backend system for managing shared resources such as meeting rooms, vehicles, and equipment. Built with TypeORM for database management, this system provides comprehensive scheduling capabilities with built-in conflict prevention, approval workflows, and administrative controls.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🎯 Overview
 
-## Description
+The Shared Resource Scheduling System addresses the common challenges organizations face when managing shared resources. It ensures efficient allocation, prevents double-booking, and provides administrative oversight for resource management.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## ✨ Key Features
 
-## Project setup
+### 🗓️ Time-Based Reservations
+- Create reservations with specific start and end times
+- Support for recurring bookings (daily, weekly, monthly)
+- Buffer time configuration between bookings
+- Timezone-aware scheduling
+
+### 🚫 Overlap Prevention
+- Real-time conflict detection
+- Automatic validation of booking availability
+- Grace period handling
+- Concurrent booking prevention with optimistic locking
+
+### ✅ Approval & Cancellation Rules
+- Configurable approval workflows
+- Multi-level approval chains
+- Automatic approval for trusted users
+- Cancellation policies with notice periods
+- Cancellation fees and penalties support
+
+### 🔒 Admin Controls
+- Block time slots for maintenance
+- Emergency cancellations
+- Resource availability management
+- Booking history and audit trails
+- Resource utilization reports
+
+## 🏗️ Architecture
+
+Built with **NestJS** framework and **TypeORM** for robust, scalable backend development.
+
+### Technology Stack
+
+- **Framework**: NestJS (Node.js framework for building efficient, scalable server-side applications)
+- **ORM**: TypeORM (TypeScript-based ORM for database operations)
+- **Database**: PostgreSQL 12+ (primary), MySQL 8+ (supported)
+- **Caching**: Redis (for session management and performance optimization)
+- **Authentication**: Passport.js with JWT strategy
+- **Validation**: class-validator and class-transformer
+- **API Documentation**: Swagger/OpenAPI
+
+### Core Components
+
+- **Resource Module**: CRUD operations for resources (rooms, vehicles, equipment)
+- **Booking Module**: Handles reservation creation, validation, and conflict detection
+- **Approval Module**: Manages approval processes and notifications
+- **User Module**: Authentication, authorization, and role-based access control (RBAC)
+- **Notification Module**: Email and in-app notifications for booking events
+- **Reporting Module**: Analytics and utilization reports
+
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18+ LTS
+- pnpm package manager
+- PostgreSQL 12+
+
+### Installation
 
 ```bash
-$ pnpm install
+# Clone the repository
+git clone https://github.com/Huseny/Shared-Resource-Scheduler.git
+cd Shared-Resource-Scheduler
+
+# Install dependencies
+pnpm install
+
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your configuration
+
+# Run database migrations
+pnpm run migration:run
+
+# Start the development server
+pnpm run start:dev
 ```
 
-## Compile and run the project
+### Configuration
+
+Create a `.env` file with the following variables:
+
+```env
+# Application
+PORT=3000
+NODE_ENV=development
+
+# Database (TypeORM)
+DB_TYPE=postgres
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+DB_DATABASE=resource_scheduler
+DB_SYNCHRONIZE=false
+DB_LOGGING=true
+
+# Authentication
+JWT_SECRET=your_secret_key_here
+JWT_EXPIRATION=24h
+
+# Email (Nodemailer)
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=your_email@example.com
+SMTP_PASSWORD=your_password
+EMAIL_FROM=noreply@example.com
+
+# Swagger
+SWAGGER_ENABLED=true
+SWAGGER_PATH=api/docs
+```
+
+## 🔐 Security
+
+NestJS provides built-in security features and integrations:
+
+- **JWT Authentication**: Using Passport.js JWT strategy
+- **Role-Based Access Control (RBAC)**: Custom decorators and guards
+- **Input Validation**: class-validator for DTO validation
+- **SQL Injection Prevention**: TypeORM parameterized queries
+- **Rate Limiting**: @nestjs/throttler for API rate limiting
+- **CORS**: Configured in main.ts
+- **Helmet**: Security headers middleware
+- **HTTPS**: Enforced in production environments
+
+## 📊 Performance
+
+Optimizations for production-ready NestJS applications:
+
+- **TypeORM Query Optimization**: Proper indexing and query builders
+- **Redis Caching**: @nestjs/cache-manager with Redis store
+- **Connection Pooling**: TypeORM connection pool configuration
+- **Compression**: Using compression middleware
+- **Lazy Loading**: Dynamic module imports
+- **Query Pagination**: Implemented on all list endpoints
+- **Response Interceptors**: For data transformation and caching
+- **Database Indexes**: On frequently queried columns
+- **Response Time**: SLA target < 200ms for 95th percentile
+
+## 🤝 Contributing
+
+We welcome contributions! Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+Please ensure:
+- Code follows NestJS best practices and style guide
+- All tests pass (`npm run test` and `npm run test:e2e`)
+- New features include unit and e2e tests
+- DTOs have proper validation decorators
+- API endpoints are documented with Swagger decorators
+- Documentation is updated
+
+### Development Guidelines
 
 ```bash
-# development
-$ pnpm run start
+# Follow NestJS CLI for generating components
+nest generate module bookings
+nest generate controller bookings
+nest generate service bookings
 
-# watch mode
-$ pnpm run start:dev
+# Code formatting
+pnpm run format
 
-# production mode
-$ pnpm run start:prod
+# Linting
+pnpm run lint
 ```
 
-## Run tests
+## 📝 License
 
-```bash
-# unit tests
-$ pnpm run test
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-# e2e tests
-$ pnpm run test:e2e
+## 👥 Authors
 
-# test coverage
-$ pnpm run test:cov
-```
+- **Huseny** - [GitHub Profile](https://github.com/Huseny)
 
-## Deployment
+## 🗺️ Roadmap
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ pnpm install -g mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- [ ] GraphQL API support (@nestjs/graphql)
+- [ ] Microservices architecture with NestJS
+- [ ] WebSocket support for real-time notifications
+- [ ] Mobile app integration
+- [ ] Calendar sync (Google Calendar, Outlook)
+- [ ] Advanced analytics dashboard with Chart.js
+- [ ] Resource usage predictions with ML
+- [ ] Multi-language support (i18n)
+- [ ] OAuth2 integration (Google, Microsoft, GitHub)
+- [ ] Webhook support for third-party integrations
+- [ ] Docker and Kubernetes deployment configs
+- [ ] Health checks and monitoring (Prometheus metrics)
