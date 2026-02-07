@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
+import { ReservationModule } from './reservation/reservation.module';
 
 @Module({
   imports: [
@@ -15,15 +16,17 @@ import { UserModule } from './user/user.module';
         type: 'postgres',
         host: cfg.get('DB_HOST'),
         port: Number(cfg.get('DB_PORT') || 5432),
-        username: cfg.get('DB_USER'),
-        password: cfg.get('DB_PASS'),
-        database: cfg.get('DB_NAME'),
+       username: cfg.get('DB_USERNAME'),
+password: cfg.get('DB_PASSWORD'),
+database: cfg.get('DB_DATABASE'),
+
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
         synchronize: cfg.get('NODE_ENV') !== 'production',
         logging: true,
       }),
     }),
     UserModule,
+    ReservationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
