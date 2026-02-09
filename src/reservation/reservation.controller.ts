@@ -1,7 +1,5 @@
-import { Body, Controller, Get, Post, Req } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, Req } from '@nestjs/common';
 import { ReservationService } from './reservation.service';
-
-
 
 @Controller('reservation')
 export class ReservationController {
@@ -9,12 +7,16 @@ export class ReservationController {
 
     @Post()
   create(@Body() data, @Req() req) {
-    return this.reservationService.createReservation(data, req.user);
+     const user = { id: data.userId }; 
+    return this.reservationService.createReservation(data, user);
   }
-   @Get('my')
-  getMyReservations(@Req() req) {
-    return this.reservationService.getUserReservations(req.user.id);
-  }
+
+@Get(':id')
+getUserReservations(@Param('id') id: string) {
+  return this.reservationService.getUserReservations(Number(id));
+}
+
+
   @Get()
   getAllReservations() {
     return this.reservationService.getAllReservations();

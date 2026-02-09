@@ -2,11 +2,14 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ReservationService {
-    getUserReservations(id: any) {
-       
+  private reservations = [];
+
+  
+    async getUserReservations(userId : number) {
+       return await this.reservations.filter(r => r.userId === userId);
     }
     async getAllReservations() {
-        
+      return await this.reservations;
     }
   
     async createReservation(data, user) {
@@ -21,7 +24,7 @@ export class ReservationService {
       status: 'PENDING',
     };
 
-    
+    this.reservations.push(reservation);    
     return reservation;
   }
         
